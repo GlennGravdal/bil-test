@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .nyBil {
+            border: 5px outset grey;
+            background-color: lightgrey;
+            width: 200px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <form action="/search" method="POST">
+
+        <input list="liste" name="kategori" id="kategori">
+            <datalist id ="liste">
+                <option value="merke"></option>
+                <option value="modell"></option>
+                <option value="kommentar"></option>
+            </datalist>
+
+
+        <input type="text" id = "searchField" name = "searchField" placeholder="Search..">
+        <input type="submit" id="submit" name = "submit" value = "submit">
+    </form>    
+
+
+
+
+    Nå er vi på biler siden EJS <br>
+
+    <div class ="nyBil">
+        legg til ny bil:
+        <form action="/biler/ny" method="POST">
+            <label for="merke">Merke</label> <br>
+            <input type="text" id="merke" name="merke"> <br>
+            <label for="modell">Modell</label> <br>
+            <input type="text" id="modell" name="modell"> <br>
+            <label for="kjørelengde">Kjørelengde</label> <br>
+            <input type="text" id="kjørelengde" name="kjørelengde"> <br>
+            <label for="pris">Pris</label> <br>
+            <input type="text" id="pris" name="pris"> <br>
+            <label for="produksjonsår">Produksjonsår</label> <br>
+            <input type="text" id="produksjonsår" name="produksjonsår"> <br>
+            <label for="drivstoff">Drivstoff</label> <br>
+            <input type="text" id="drivstoff" name="drivstoff"> <br>
+            <label for="bilforhandler_id">Bilforhandler_ID</label> <br>
+            <input type="text" id="bilforhandler_id" name="bilforhandler_id"> <br>
+            <label for="kommentar">Kommentar</label> <br>
+            <input type="text" id="kommentar" name="kommentar"> <br>
+            <label for="link">Link til bilde</label> <br>
+            <input type="text" id="link" name="link"> <br>
+            <input type="submit" id="submit" name="submit" value="insert" class="btn"> <br>
+        </form>
+    </div>
+
+    <% for(var i = 0; i < obj.length; i++) { %>
+        <div class = "bil" style="cursor: pointer;" onclick="hentBil(`<%=obj[i].id%>`)">
+            <%=i + 1%>  
+            <%=obj[i].merke%> 
+            <%=obj[i].modell%> 
+
+            <form action="/biler/slett/<%=obj[i].id%>">
+                <button type="submit">X</button>
+            </form>
+            
+            <br>
+            <img src="<%=obj[i].link%>" alt="" style="width: 200px; height: 150px;">
+            <br>
+        </div>
+    <%} %>
+</body>
+
+    <script>
+        function hentBil(ID) {
+            console.log(ID);
+            var nyUrl = "/biler/" + ID 
+            //kommer til å lage forskjellige URLer. For eksempel:
+            //om jeg trykker på bil 5: https://localhost:5000/biler/5
+            window.location.assign(nyUrl)
+        }
+    </script>
+
+</html>
